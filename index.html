@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Disorder Timeline</title>
+    <style>
+        /* 1. 기본 설정 */
+        body { margin: 0; background-color: #121212; color: white; font-family: -apple-system, BlinkMacSystemFont, "Pretendard", "Apple SD Gothic Neo", sans-serif; overflow: hidden; word-break: keep-all; }
+        
+        /* 2. 타임라인 컨테이너 */
+        .timeline-container { height: 100vh; overflow-y: scroll; scroll-behavior: smooth; position: relative; -ms-overflow-style: none; scrollbar-width: none; }
+        .timeline-container::-webkit-scrollbar { display: none; }
+
+        /* 3. 개별 항목 컨테이너 */
+        .timeline-item { height: 600px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 0 20px; box-sizing: border-box; cursor: pointer; }
+
+        /* --- 요소별 스타일 --- */
+        .timeline-img { width: 240px; height: 240px; object-fit: cover; border-radius: 16px; margin-bottom: 30px; box-shadow: 0 4px 20px rgba(0,0,0,0.6); transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94); opacity: 0.4; transform: scale(0.85); filter: blur(4px) grayscale(100%); }
+        .timeline-text { max-width: 600px; transition: all 0.6s ease-out; opacity: 0.2; transform: translateY(20px); filter: blur(2px); pointer-events: none; }
+        .year { font-size: 1.2rem; color: #888; margin-bottom: 10px; font-weight: 600; letter-spacing: 1px; }
+        .title { font-size: 1.8rem; font-weight: 800; margin-bottom: 20px; line-height: 1.3; color: #fff; }
+        .description { font-size: 1.1rem; line-height: 1.6; color: #ccc; font-weight: 400; }
+
+        /* 4. 활성화 상태 (Active) */
+        .timeline-item.active .timeline-img { opacity: 1; transform: scale(1.1); filter: blur(0) grayscale(0%); box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5); }
+        .timeline-item.active .timeline-text { opacity: 1; transform: translateY(0); filter: blur(0); }
+        .timeline-item.active .year { color: #1DB954; }
+        .timeline-item.active .title { text-shadow: 0 0 20px rgba(255,255,255,0.2); }
+        .timeline-item:active .timeline-img { transform: scale(0.95); transition: transform 0.1s; }
+
+        .spacer { height: 50vh; }
+    </style>
+</head>
+<body>
+
+    <div class="timeline-container" id="scrollContainer">
+        <div class="spacer"></div>
+
+        <div class="timeline-item" data-id="2011_court">
+            <img src="https://teachingamericanhistory.org/content/uploads/2021/07/Scalia_Thumbnail-e1623163396978-1.jpg" alt="미 연방대법원" class="timeline-img">
+            <div class="timeline-text">
+                <div class="year">2011.06</div>
+                <div class="title">Precedent 564 U.S. 786</div>
+                <div class="description">
+                    The Supreme Court of the United States ruled that "Video games are protected by the First Amendment and lacks evidence for harm."
+                </div>
+            </div>
+        </div>
+
+        <div class="timeline-item" data-id="2013_bill">
+            <img src="https://cdn.ilovepcbang.com/news/photo/202507/117615_245768_4349.png" alt="4대 중독법" class="timeline-img">
+            <div class="timeline-text">
+                <div class="year">2013.04</div>
+                <div class="title">Four Major Addiction Act</div>
+                <div class="description">
+                    Korean congressman Shin Eui-Jin proposed a bill to classify internet game addiction as a disease along with gambling, drugs, and alcohol.
+                </div>
+            </div>
+        </div>
+
+        <div class="timeline-item" data-id="2013_dsm">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/DSM-5_cover.svg/960px-DSM-5_cover.svg.png" alt="DSM-5" class="timeline-img">
+            <div class="timeline-text">
+                <div class="year">2013.05</div>
+                <div class="title">DSM-5 Published</div>
+                <div class="description">
+                    American Psychiatric Association published DSM-5 including "Internet Gaming Disorder" as a condition for further study.
+                </div>
+            </div>
+        </div>
+
+        <div class="timeline-item" data-id="2016_discard">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/20140808%EB%8B%A4%EB%AC%B8%ED%99%94%EA%B0%80%EC%A1%B1%EA%B3%BC_%ED%95%A8%EA%BB%98119%EC%84%9C%EC%9A%B8%ED%88%AC%EC%96%B498.jpg/500px-20140808%EB%8B%A4%EB%AC%B8%ED%99%94%EA%B0%80%EC%A1%B1%EA%B3%BC_%ED%95%A8%EA%BB%98119%EC%84%9C%EC%9A%B8%ED%88%AC%EC%96%B498.jpg" alt="법안 폐기" class="timeline-img">
+            <div class="timeline-text">
+                <div class="year">2016.05</div>
+                <div class="title">Discard of Four Major Addiction Act</div>
+                <div class="description">
+                    Due to the expiration of the 19th National Assembly's term and the opposition from the game industry, the bill was discarded without review.
+                </div>
+            </div>
+        </div>
+
+        <div class="timeline-item" data-id="2017_aarseth">
+            <img src="https://i1.rgstatic.net/publication/311981176_Scholars'_open_debate_paper_on_the_World_Health_Organization_ICD-11_Gaming_Disorder_proposal/links/5c0e4f3492851c39ebe25af1/largepreview.png" alt="Scholars Debate" class="timeline-img">
+            <div class="timeline-text">
+                <div class="year">2017.09</div>
+                <div class="title">Scholars’ Open Debate Paper WHO ICD-11 Proposal.</div>
+                <div class="description">
+                    Researchers argued that WHO's proposal lacks clear causal links and relies on moral panic rather than scientific evidence.
+                </div>
+            </div>
+        </div>
+
+        <div class="timeline-item" data-id="2017_who_warn">
+            <img src="https://edr.iaedpfoundation.com/wp-content/uploads/2019/11/ICD-11.jpg" alt="WHO 예고" class="timeline-img">
+            <div class="timeline-text">
+                <div class="year">2017.12</div>
+                <div class="title">WHO Announced their plan on ICD-11</div>
+                <div class="description">
+                    WHO official, "Planning to list Gaming Disorder in ICD-11" in an official interview.
+                </div>
+            </div>
+        </div>
+
+        <div class="timeline-item" data-id="2018_esa">
+            <img src="https://www.theesa.com/wp-content/uploads/2024/02/ESA-Title-Graphics-Square-WHO-png.webp" alt="글로벌 연대" class="timeline-img">
+            <div class="timeline-text">
+                <div class="year">2018.06</div>
+                <div class="title">Global Statement</div>
+                <div class="description">
+                    Shortly after WHO released the ICD-11 draft, global game associations such as K-Games, ESA issued a joint statement opposing the inclusion due to lack of scientific evidence.
+                </div>
+            </div>
+        </div>
+
+        <div class="timeline-item" data-id="2018_rumpf">
+            <img src="https://i1.rgstatic.net/publication/326427203_Including_gaming_disorder_in_the_ICD-11_The_need_to_do_so_from_a_clinical_and_public_health_perspective_Commentary_on_A_weak_scientific_basis_for_gaming_disorder_Let_us_err_on_the_side_of_caution_van_/links/5b5043a945851507a7adcb46/largepreview.png" alt="Rumpf et al" class="timeline-img">
+            <div class="timeline-text">
+                <div class="year">2018.09</div>
+                <div class="title">Rebuttal on Open Debate by Rumpf et al.</div>
+                <div class="description">
+                    Proponents argued that strict diagnostic criteria are necessary for public health systems, insurance coverage, and to prevent overdiagnosis.
+                </div>
+            </div>
+        </div>
+
+        <div class="timeline-item" data-id="2019_who_decision">
+            <img src="https://cdn.who.int/media/images/default-source/world-health-assembly/who-wha69-23may2016-0089.tmb-1920v.jpg?sfvrsn=a7130a81_21" alt="WHO 의결" class="timeline-img">
+            <div class="timeline-text">
+                <div class="year">2019.05</div>
+                <div class="title">The 72nd WHO General Assembly unanimously agreed on listing Gaming Disorder</div>
+                <div class="description">
+                    The Gaming Disorder is officially listed in ICD-11 with code "6C51".
+                </div>
+            </div>
+        </div>
+
+        <div class="timeline-item" data-id="2019_oxford">
+            <img src="https://huofamilyfoundation.org/wp-content/uploads/2021/06/huo-ff-andy-przybylski.jpg" alt="옥스퍼드 연구" class="timeline-img">
+            <div class="timeline-text">
+                <div class="year">2019.11</div>
+                <div class="title">Oxford University Research (Przybylski)</div>
+                <div class="description">
+                    "WHO's diagnostic criteria are subjective and lack transparency." A strong theoretical rebuttal from Oxford University.
+                </div>
+            </div>
+        </div>
+
+        <div class="timeline-item" data-id="2019_china_reg">
+            <img src="https://assets.weforum.org/article/image/3n3PvVyeQUtArWb8ffbvstBEGU5qBrLKGl7Pzfpz-B8.PNG" alt="중국 셧다운" class="timeline-img">
+            <div class="timeline-text">
+                <div class="year">2019.11</div>
+                <div class="title">Chinese Initiated Regulations on Video Gaming</div>
+                <div class="description">
+                    China's National Press and Publication Administration announced a shutdown policy limiting minors to 90 minutes on weekdays and 3 hours on weekends.
+                </div>
+            </div>
+        </div>
+
+        <div class="timeline-item" data-id="2020_playapart">
+            <img src="https://i.insider.com/5e8207ba2d654f6b5729d099?width=700" alt="PlayApartTogether" class="timeline-img">
+            <div class="timeline-text">
+                <div class="year">2020.03</div>
+                <div class="title">#PlayApartTogether Campaign</div>
+                <div class="description">
+                    During the COVID-19 pandemic, WHO encouraged gaming as a way to maintain social distancing through the #PlayApartTogether campaign.
+                </div>
+            </div>
+        </div>
+
+        <div class="timeline-item" data-id="2020_data">
+            <img src="https://hiphopwired.com/wp-content/uploads/sites/43/2020/11/16056502402983.jpg?strip=all&quality=85" alt="데이터 분석" class="timeline-img">
+            <div class="timeline-text">
+                <div class="year">2020.11</div>
+                <div class="title">Data Analysis from Oxford University with Game Companies</div>
+                <div class="description">
+                    Nintendo and EA data analysis showed no correlation between gaming time and mental health deterioration.
+                </div>
+            </div>
+        </div>
+
+        <div class="timeline-item" data-id="2021_china_3h">
+            <img src="https://i.ytimg.com/vi/V61cxYZbNHY/sddefault.jpg" alt="중국 주3시간" class="timeline-img">
+            <div class="timeline-text">
+                <div class="year">2021.08</div>
+                <div class="title">Chinese Government announces "3 Hours Per Week" Regulation</div>
+                <div class="description">
+                    The most strict regulation in the world. Minors are only allowed to access games from 8-9 PM on Fridays, Saturdays, and Sundays.
+                </div>
+            </div>
+        </div>
+
+        <div class="timeline-item" data-id="2022_icd_effective">
+            <img src="https://cdn.who.int/media/images/default-source/classifications/icd/icd11/icd-11-2022-release.png?sfvrsn=4ba6a1f3_19" alt="ICD-11 발효" class="timeline-img">
+            <div class="timeline-text">
+                <div class="year">2022.01</div>
+                <div class="title">ICD-11 Officially Taking Effect Globally</div>
+                <div class="description">
+                    WHO's ICD-11 officially takes effect, but many countries including the US and South Korea have not yet applied the new classification system.
+                </div>
+            </div>
+        </div>
+
+        <div class="timeline-item" data-id="2022_ftc">
+            <img src="https://www.militaryconsumer.gov/sites/www.militaryconsumer.gov/files/styles/social_standard/public/consumer_ftc_gov/images/fortnite-socmed-1200x630.png?h=ec041e41&itok=95J_87W6" alt="다크 패턴" class="timeline-img">
+            <div class="timeline-text">
+                <div class="year">2022.12</div>
+                <div class="title">FTC vs Epic Games</div>
+                <div class="description">
+                    The US Federal Trade Commission sued Epic Games for using addictive "dark patterns" to manipulate children into making in-app purchases.
+                </div>
+            </div>
+        </div>
+
+        <div class="timeline-item" data-id="2023_surgeon">
+            <img src="https://pbs.twimg.com/media/FxZKpGCWAAAOAEY.jpg" alt="미 의무총감" class="timeline-img">
+            <div class="timeline-text">
+                <div class="year">2023.05</div>
+                <div class="title">US Surgeon General Advisory</div>
+                <div class="description">
+                    Social media and gaming may negatively pose risks to children's mental health.
+                </div>
+            </div>
+        </div>
+
+        <div class="timeline-item" data-id="2024_kocca">
+            <img src="https://mms.businesswire.com/media/20250814417623/en/2553393/22/kocca_logo.jpg" alt="한국 종단연구" class="timeline-img">
+            <div class="timeline-text">
+                <div class="year">2024.05</div>
+                <div class="title">Korea Creative Content Agency Research</div>
+                <div class="description">
+                    "No consistent problem group meeting WHO criteria." Korean domestic research results showing lack of scientific basis for disease classification.
+                </div>
+            </div>
+        </div>
+
+        <div class="timeline-item" data-id="2025_apa">
+            <img src="https://psychiatryonline.org/pb-assets/sitewide/images/Logo_APA_Stacked_260-1434556066087.png" alt="APA 침묵" class="timeline-img">
+            <div class="timeline-text">
+                <div class="year">2025.01</div>
+                <div class="title">APA keeps silence</div>
+                <div class="description">
+                    3 years after ICD-11 took effect, APA still withholds official disease classification, demanding biological indicator evidence.
+                </div>
+            </div>
+        </div>
+
+        <div class="timeline-item" data-id="2025_president">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/The_Inauguration_Ceremony_of_the_21th_President_of_Republic_of_Korea_%2854566787254%29.jpg/1200px-The_Inauguration_Ceremony_of_the_21th_President_of_Republic_of_Korea_%2854566787254%29.jpg" alt="대통령 연설" class="timeline-img">
+            <div class="timeline-text">
+                <div class="year">2025.10</div>
+                <div class="title">Korean President: "Video Gaming should be treated as culture."</div>
+                <div class="description">
+                    President Lee Jae-myeong criticizes past regulatory frameworks and postpone listing of Gaming Disorder in KCD.
+                </div>
+            </div>
+        </div>
+
+        <div class="spacer"></div>
+    </div>
+
+    <script>
+        // -----------------------------------------------------------------------------------
+        const detailContents = {
+            "2011_court": `
+                In 2005, California passed the 'California Video Game Decency Act', which aimed to restrict the sale of violent video games to minors. Entertainment Merchant Association and Entertainment Software Association challenged the Law, arguing that video games are protected under the First Amendament of the US Constitution. The Supreme Court concluded that this law violated the constitutional right to free speech for these following reasons:
+                1. Video games are a form of art and expression protected by the First Amendment just like books, plays and movies.
+                2. The violence is different from sexual content that has been historically regulated.
+                3. There is insufficient evidence that violent video games cause violent behaviours in players.
+                4. ESRB rating system already provides proper information for consumers.
+            `,
+
+            "2013_bill": `
+                In April 2013, the 'Four Major Addictions Act' was proposed in South Korea by Congressman Shin Eui-Jin. The bill was designed to classify Gaming Disorder as a disease with gambling, drugs, and alcohol. A lot of controversy arose around this bill due to insufficient scientific evidence and opposition from the game industry and the public. This was a small version of WHO's later proposal to include Gaming Disorder in ICD-11, however, they did not find enough support to pass the bill at the time.
+            `,
+
+            "2013_dsm": `
+                In May 2013, American Psychiatric Association (APA) published the DSM-5, which included 'Internet Gaming Disorder' as a sector 3 which is a condition for further study. While they acknowledged that excessive gaming can lead to significant impairment, they noted that there was insufficient evidence of the correlation between gaming and mental health issues. The following diagnostic criteria were proposed for further research:
+                1. Preoccupation with gaming
+                2. Withdrawal symptoms when gaming is taken away
+                3. Tolerance, the need to spend more time gaming
+                4. Unsuccessful attempts to control gaming
+                5. Loss of interest in previous hobbies and entertainment
+                6. Continued excessive use of games despite knowledge of psychosocial problems
+                7. Deceiving family members, therapists, or others regarding the amount of gaming
+                8. Use of gaming to escape or relieve negative moods
+                9. Jeopardizing or losing a significant relationship, job, or educational or career opportunity because of gaming
+            `,
+
+            "2016_discard": `
+                Due to the expiration of the 19th National Assembly's term in May 2016, the 'Four Major Addictions Act' was discarded without review. They could not reach a consensus due to strong opposition from the public. It also reminded people of Shut-Down Law (Cinderella Law) which was enacted in 2011 but rejected in 2014 due to ineffectiveness and criticism.
+            `,
+
+            "2017_aarseth": `
+                In 2017, a group of scholars led by Espen Aarseth published an open debate paper criticizing the WHO's plan to include Gaming Disorder in ICD-11. They concerned about the proposal for the following reasons:
+                1. Lack of clear causal links between gaming and mental health issues.
+                2. Reliance on moral panic and societal fears rather than scientific evidence.
+                3. Potential negative consequences of pathologizing normal gaming behavior, such as stigmatization and unnecessary treatment.
+                
+            `,
+
+            "2017_who_warn": `
+                In December 2017, a WHO official officially confirmed in an interview with New Scientist that they were planning to list Gaming Disorder in the upcoming ICD-11. This was a apparent declaration of war against the global game industry and scholars who opposed the pathologization.
+            `,
+
+            "2018_esa": `
+                Immediately after the release of the ICD-11 draft, the Entertainment Software Association (ESA) and other global game associations issued a joint statement. They criticized the WHO's decision for the following reasons:
+                1. The dicision was being driven by political pressure rather than scientific necessity.
+                2. The inclusion was not based on credible scientific evidence.
+                3. The potential negative impact on the gaming community and industry.
+            `,
+
+            "2018_rumpf": `
+                In September 2018, Rumpf et al. published a rebuttal paper supporting the WHO's proposal. They agreed with the inclusion of Gaming Disorder in ICD-11 for the following reasons:
+                1. Public health systems need this classification to provide better and faster treatment.
+                2. Inclusion in ICD-11 would widen insurance coverage and give easier access to treatment for individuals.
+                3. Clear diagnostic guidelines would be applied to prevent overdiagnosis and misuse of the diagnosis.
+            `,
+
+            "2019_who_decision": `
+                In May 2019, at the 72nd World Health Assembly, the WHO unanimously adopted the ICD-11, which included 'Gaming Disorder'. The evidence they cited for this decision was mostly based on clinical reports which are published in East Asia. Official ICD-11 addresses Gaming disorder as follows:
+                "Gaming disorder is characterized by a pattern of persistent or recurrent gaming behavior which may be online or offline."
+                1. impaired control over gaming
+                2. increasing priority given to gaming to the extent that gaming takes precedence over other life interests and daily activities
+                3. continuation or escalation of gaming despite the occurrence of negative consequences.
+                The behavior pattern is of sufficient severity to result in significant impairment in personal, family, social, educational, occupational or other important areas of functioning. The pattern of gaming behavior may be continuous or episodic and recurrent. The gaming behavior and other features are normally evident over a period of at least 12 months in order for a diagnosis to be assigned, although the required duration may be shortened if all diagnostic requirements are met and symptoms are severe."
+            `,
+
+            "2019_oxford": `
+                In late 2019, Oxford University researchers (including Przybylski) continued to publish studies refuting the WHO's criteria. They argued that the WHO's diagnostic criteria were subjective and lacked transparency. They highlighted that the criteria were largely derived from substance use and gambling disorders, failing to account for the specific nature of gaming culture.
+            `,
+
+            "2019_china_reg": `
+                Shortly after the WHO's decision, China's National Press and Publication Administration announced strict regulations. Minors were limited to 90 minutes of gaming on weekdays and 3 hours on weekends. Reuters suggested that the WHO's decision was used as a justification for these regulations. Also, this brought concerns on E-sports industry since many professional gamers start their careers as minors.
+            `,
+
+            "2020_playapart": `
+                Ironically, during the COVID-19 pandemic in 2020, the WHO launched the #PlayApartTogether campaign. Only a year after classifying gaming as a disorder, the WHO partnered with major game companies like Nintendo and Sony to encourage people to play video games as a healthy way to maintain social distancing. They were criticized for this inconsistency in their stance.
+            `,
+
+            "2020_data": `
+                In November 2020, a collaborative study between Oxford University and game companies (Nintendo, EA) analyzed actual telemetry data.
+                The results showed <b>no significant correlation</b> between time spent playing games and mental health deterioration. This was a significant blow to the "addiction model" which often conflated high engagement with pathology.
+            `,
+
+            "2021_china_3h": `
+                In August 2021, the Chinese government announced the "world's most strict" gaming regulation. Minors were only allowed to play video games for one hour (8PM - 9PM) on Fridays, Saturdays, and Sundays.
+            `,
+
+            "2022_icd_effective": `
+                In January 2022, the ICD-11 officially came into effect globally. However, major countries including the United States and South Korea hesitated to adopt the gaming disorder code immediately.
+            `,
+
+            "2022_ftc": `
+                In the US, the focus shifted from 'disease' to 'consumer protection'. The FTC fined Epic Games over $500 million for using "Dark Patterns" to trick players into making unintended purchases. This signaled that the US government viewed the issue as a matter of unfair business practices and consumer manipulation rather than a mental health disorder.
+            `,
+
+            "2023_surgeon": `
+                In 2023, the US Surgeon General issued an advisory warning that social media and excessive gaming could pose risks to children's mental health. This framed the issue as a broader "public health crisis" related to the digital environment, rather than focusing solely on the individual pathology of gaming addiction.
+            `,
+
+            "2024_kocca": `
+                In May 2024, the Korea Creative Content Agency (KOCCA) released the results of a 5-year longitudinal study. They announced the results through a panel survey that "The youth's excessive immersion in games is caused by psychological and social environmental factors such as academic stress and parenting attitudes rather than the game itself."
+            `,
+
+            "2025_apa": `
+                As of January 2025, the American Psychiatric Association (APA) has maintained its silence. Three years after the ICD-11 came into effect, the US psychiatric community still classifies Internet Gaming Disorder as a "Condition for Further Study." They continue to demand biological indicator evidence to distinguish it as a separate disease, showing a "generational and cultural divide" in understanding digital culture.
+            `,
+
+            "2025_president": `
+                In October 2025, South Korea President Lee Jae-myeong declared that "Gaming is culture" Speaking at a game industry conference, he criticized the past regulatory frameworks that viewed games as addictive substances. After his speech, National Data Agency announced the postponement of listing Gaming Disorder in KCD until social consensus is reached.
+                `,
+
+        };
+
+        // --- 기존 스크롤 로직 ---
+        const container = document.getElementById('scrollContainer');
+        const items = document.querySelectorAll('.timeline-item');
+
+        function updateFocus() {
+            const containerCenter = container.scrollTop + (container.clientHeight / 2);
+            items.forEach(item => {
+                const itemCenter = item.offsetTop + (item.offsetHeight / 2);
+                const distance = Math.abs(containerCenter - itemCenter);
+                if (distance < 200) {
+                    item.classList.add('active');
+                } else {
+                    item.classList.remove('active');
+                }
+            });
+        }
+        container.addEventListener('scroll', () => window.requestAnimationFrame(updateFocus));
+        updateFocus();
+
+        // --- 클릭 이벤트 (상세 페이지 이동) ---
+        items.forEach(item => {
+            item.addEventListener('click', () => {
+                const id = item.getAttribute('data-id');
+                let longDescription = detailContents[id];
+                if (!longDescription) {
+                    longDescription = item.querySelector('.description').innerText;
+                }
+
+                const data = {
+                    year: item.querySelector('.year').innerText,
+                    title: item.querySelector('.title').innerText,
+                    img: item.querySelector('img').src,
+                    desc: longDescription
+                };
+                
+                localStorage.setItem('detailData', JSON.stringify(data));
+                window.location.href = 'detail.html';
+            });
+        });
+    </script>
+</body>
+</html>
