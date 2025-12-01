@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detail View</title>
+    <style>
+        body {
+            margin: 0;
+            background-color: #121212;
+            color: white;
+            font-family: -apple-system, BlinkMacSystemFont, "Pretendard", "Apple SD Gothic Neo", sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 800px;
+            padding: 40px;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        /* 뒤로가기 버튼 */
+        .back-btn {
+            position: fixed;
+            top: 30px;
+            left: 30px;
+            background: none;
+            border: 1px solid #555;
+            color: #aaa;
+            padding: 10px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        .back-btn:hover {
+            border-color: #1DB954;
+            color: #1DB954;
+            background-color: rgba(29, 185, 84, 0.1);
+        }
+
+        /* 이미지 스타일 */
+        #detail-img {
+            width: 100%;
+            max-width: 500px;
+            height: auto;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+            margin-bottom: 40px;
+        }
+
+        /* 텍스트 스타일 */
+        #detail-year {
+            color: #1DB954;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+
+        #detail-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 30px;
+            line-height: 1.2;
+        }
+
+        #detail-desc {
+            font-size: 1.3rem;
+            line-height: 1.8;
+            color: #ccc;
+            text-align: left; /* 문단은 왼쪽 정렬이 읽기 편함 */
+            background-color: rgba(255,255,255,0.05);
+            padding: 30px;
+            border-radius: 15px;
+        }
+
+        /* 등장 애니메이션 */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <button class="back-btn" onclick="history.back()">← Back</button>
+
+    <div class="container">
+        <div id="detail-year"></div>
+        <h1 id="detail-title">Loading...</h1>
+        <img id="detail-img" src="" alt="Detail Image">
+        <p id="detail-desc"></p>
+    </div>
+
+    <script>
+        // 1. 저장된 데이터 불러오기
+        const storedData = localStorage.getItem('detailData');
+
+        if (storedData) {
+            const data = JSON.parse(storedData);
+
+            // 2. HTML 요소에 데이터 채워넣기
+            document.getElementById('detail-year').innerText = data.year;
+            document.getElementById('detail-title').innerText = data.title;
+            document.getElementById('detail-img').src = data.img;
+            document.getElementById('detail-desc').innerText = data.desc;
+        } else {
+            document.getElementById('detail-title').innerText = "Data not found.";
+        }
+    </script>
+
+</body>
+</html>
